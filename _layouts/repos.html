@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ page.title }} | {{ site.title }}</title>
+
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+
+    <style>
+      .repo-table-wrapper {
+        margin-top: 1.5rem;
+        overflow-x: auto;
+      }
+      #repo-table {
+        width: 100%;
+        font-size: 0.85rem;
+      }
+      #repo-table th {
+        white-space: nowrap;
+      }
+      #repo-table td.description-col {
+        max-width: 280px;
+        white-space: normal;
+        word-break: break-word;
+      }
+      #repo-table td.repo-name-col {
+        white-space: nowrap;
+      }
+      .org-badge {
+        display: inline-block;
+        padding: 2px 7px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #fff;
+        white-space: nowrap;
+      }
+      .org-genepattern   { background: #0075ca; }
+      .org-igvteam       { background: #6f42c1; }
+      .org-uclahs-cds    { background: #2ea44f; }
+      .org-gsea-msigdb   { background: #d73a49; }
+      .stat-icon { margin-right: 3px; }
+      .dataTables_wrapper .dataTables_filter input {
+        width: 260px;
+      }
+      #last-updated {
+        font-size: 0.8rem;
+        color: #586069;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ site.title }}</h1>
+      <h2 class="project-tagline">{{ site.description }}</h2>
+      {% if site.header_pages %}
+        <nav>
+          {% for node in site.header_pages %}
+            {% assign page_path = node %}
+            {% assign page_name = node | remove_first: "/" | split: "." | first %}
+            <a href="{{ page_name | relative_url }}" class="btn">{{ page_name | capitalize }}</a>
+          {% endfor %}
+        </nav>
+      {% endif %}
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <h2>{{ page.title }}</h2>
+      <p>{{ content }}</p>
+
+      <div id="last-updated">
+        {% if site.data.repositories.size > 0 %}
+          Showing {{ site.data.repositories.size }} repositories.
+          Last updated: <span id="updated-ts">see workflow run</span>
+        {% else %}
+          No repository data yet. Trigger the <strong>fetch-repos</strong> workflow in GitHub Actions to populate this table.
+        {% endif %}
+      </div>
+
+      <div class="repo-table-wrapper">
+        <table id="repo-table" class="display responsive nowrap" style="width:100%">
+          <thead>
+            <tr>
+              <th>Organization</th>
+              <th>Repository</th>
+              <th class="description-col">Description</th>
+              <th>Language</th>
+              <th>License</th>
+              <th>★ Stars</th>
+              <th>Forks</th>
+              <th>Watchers</th>
+              <th>Last Push</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="site-footer">
+        <span class="site-footer-credits">
+          Data refreshed nightly via GitHub Actions.
+          <a href="{{ site.github.repository_url }}">View source on GitHub</a>.
+        </span>
+      </footer>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+    <script>
+      var ORG_CLASSES = {
+        'genepattern': 'org-genepattern',
+        'igvteam':     'org-igvteam',
+        'uclahs-cds':  'org-uclahs-cds',
+        'GSEA-MSigDB': 'org-gsea-msigdb'
+      };
+
+      var repos = {{ site.data.repositories | jsonify }};
+
+      function formatDate(iso) {
+        if (!iso) return '';
+        var d = new Date(iso);
+        return d.toISOString().split('T')[0];
+      }
+
+      var tableData = repos.map(function(r) {
+        var orgClass = ORG_CLASSES[r.org] || 'org-genepattern';
+        var orgCell  = '<span class="org-badge ' + orgClass + '">' + r.org + '</span>';
+        var nameCell = '<a href="' + r.html_url + '" target="_blank" rel="noopener">' + r.name + '</a>';
+        var desc     = r.description || '';
+        var lang     = r.language || '';
+        var lic      = r.license || '';
+        var stars    = r.stargazers_count || 0;
+        var forks    = r.forks_count || 0;
+        var watchers = r.watchers_count || 0;
+        var pushed   = formatDate(r.pushed_at);
+        return [orgCell, nameCell, desc, lang, lic, stars, forks, watchers, pushed];
+      });
+
+      $(document).ready(function() {
+        $('#repo-table').DataTable({
+          data: tableData,
+          columns: [
+            { title: 'Organization' },
+            { title: 'Repository', className: 'repo-name-col' },
+            { title: 'Description', className: 'description-col' },
+            { title: 'Language' },
+            { title: 'License' },
+            { title: '★ Stars', type: 'num' },
+            { title: 'Forks',   type: 'num' },
+            { title: 'Watchers', type: 'num' },
+            { title: 'Last Push' }
+          ],
+          order: [[5, 'desc']],
+          pageLength: 25,
+          lengthMenu: [10, 25, 50, 100, 200],
+          responsive: true,
+          language: {
+            search: 'Search repos:'
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

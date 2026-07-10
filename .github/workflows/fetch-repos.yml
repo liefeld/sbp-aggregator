@@ -1,0 +1,40 @@
+name: Fetch Repository Data
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 2 AM UTC nightly
+  workflow_dispatch:        # manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch repository data
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: python scripts/fetch_repos.py
+
+      - name: Commit and push if data changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/repositories.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update repository data [skip ci]"
+            git push
+          fi
