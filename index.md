@@ -9,7 +9,7 @@ The Sanford Burnham Prebys (SBP) Software Core provides a unified view of public
 
 ## Organizations
 
-This site tracks public repositories from several GitHub organizations taht organize the projects of the SBP faculty and SBP-SC:
+This site tracks public repositories from several GitHub organizations that organize the projects of the SBP faculty and SBP-SC:
 
 | Organization | Focus |
 |---|---|
