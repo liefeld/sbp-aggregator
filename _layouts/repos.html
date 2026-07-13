@@ -9,7 +9,6 @@
 
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 
     <style>
       #repo-table, .dataTables_wrapper {
@@ -149,7 +148,7 @@
       </div>
 
       <div class="repo-table-wrapper">
-        <table id="repo-table" class="display responsive nowrap" style="width:100%">
+        <table id="repo-table" class="display nowrap" style="width:100%">
           <thead>
             <tr>
               <th>Organization</th>
@@ -189,7 +188,6 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
     <script>
       var ORG_CLASSES = {
@@ -279,7 +277,6 @@
           orderCellsTop: true,
           pageLength: 25,
           lengthMenu: [10, 25, 50, 100, 200],
-          responsive: true,
           language: {
             search: 'Search repos:'
           }
