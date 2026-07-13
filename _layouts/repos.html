@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 
     <style>
+      #repo-table, .dataTables_wrapper {
+        font-family: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
       .repo-table-wrapper {
         margin-top: 1.5rem;
         overflow-x: auto;
@@ -31,28 +34,66 @@
       #repo-table td.repo-name-col {
         white-space: nowrap;
       }
+      #repo-table td.repo-name-col a {
+        color: #801420;
+        font-weight: 500;
+      }
       .org-badge {
         display: inline-block;
-        padding: 2px 7px;
+        padding: 2px 9px;
         border-radius: 10px;
         font-size: 0.75rem;
         font-weight: 600;
         color: #fff;
         white-space: nowrap;
       }
-      .org-genepattern   { background: #0075ca; }
-      .org-igvteam       { background: #6f42c1; }
-      .org-uclahs-cds    { background: #2ea44f; }
-      .org-gsea-msigdb   { background: #d73a49; }
-      .org-yip-lab       { background: #e36209; }
-      .org-chunlab       { background: #0b7285; }
+      .org-genepattern   { background: #2C363F; }
+      .org-igvteam       { background: #6b4a3f; }
+      .org-uclahs-cds    { background: #4d6b3f; }
+      .org-gsea-msigdb   { background: #94582c; }
+      .org-yip-lab       { background: #6b4a8a; }
+      .org-chunlab       { background: #1d6b78; }
       .stat-icon { margin-right: 3px; }
+
+      table.dataTable thead th,
+      table.dataTable thead td {
+        background-color: #F2F5EA;
+        color: #801420;
+        border-bottom: 2px solid #DCE2C7 !important;
+      }
+      table.dataTable tbody tr.odd {
+        background-color: #FBF3E5;
+      }
+      table.dataTable tbody tr.even {
+        background-color: #FAFAFA;
+      }
       .dataTables_wrapper .dataTables_filter input {
         width: 260px;
+        border: 1px solid #DCE2C7;
+        border-radius: 2rem;
+        padding: 0.3rem 1rem;
+      }
+      .dataTables_wrapper .dataTables_length select {
+        border: 1px solid #DCE2C7;
+        border-radius: 0.4rem;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border-radius: 0.4rem;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        background: #801420 !important;
+        border-color: #801420 !important;
+        color: #fff !important;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: #F2F5EA !important;
+        border-color: #DCE2C7 !important;
+        color: #1B1F22 !important;
       }
       #last-updated {
         font-size: 0.8rem;
-        color: #586069;
+        color: #8A8E87;
         margin-bottom: 0.5rem;
       }
     </style>
