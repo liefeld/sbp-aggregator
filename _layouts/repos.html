@@ -96,6 +96,26 @@
         color: #8A8E87;
         margin-bottom: 0.5rem;
       }
+      tr.column-filters th {
+        padding: 4px 6px;
+        background-color: #FAFAFA;
+      }
+      tr.column-filters input,
+      tr.column-filters select {
+        width: 100%;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: normal;
+        padding: 4px 6px;
+        border: 1px solid #DCE2C7;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #1B1F22;
+      }
+      tr.column-filters input::placeholder {
+        color: #8A8E87;
+      }
     </style>
   </head>
   <body>
@@ -141,6 +161,17 @@
               <th>Forks</th>
               <th>Watchers</th>
               <th>Last Push</th>
+            </tr>
+            <tr class="column-filters">
+              <th><select class="col-filter-0"><option value="">All orgs</option></select></th>
+              <th><input type="text" class="col-filter-1" placeholder="Filter..."></th>
+              <th><input type="text" class="col-filter-2" placeholder="Filter..."></th>
+              <th><select class="col-filter-3"><option value="">All languages</option></select></th>
+              <th><select class="col-filter-4"><option value="">All licenses</option></select></th>
+              <th><input type="text" class="col-filter-5" placeholder="Min"></th>
+              <th><input type="text" class="col-filter-6" placeholder="Min"></th>
+              <th><input type="text" class="col-filter-7" placeholder="Min"></th>
+              <th><input type="text" class="col-filter-8" placeholder="YYYY-MM-DD"></th>
             </tr>
           </thead>
           <tbody>
@@ -192,8 +223,46 @@
         return [orgCell, nameCell, desc, lang, lic, stars, forks, watchers, pushed];
       });
 
+      function uniqueSorted(values) {
+        var seen = {};
+        var out = [];
+        values.forEach(function(v) {
+          if (v && !seen[v]) {
+            seen[v] = true;
+            out.push(v);
+          }
+        });
+        return out.sort(function(a, b) { return a.localeCompare(b); });
+      }
+
+      function populateSelect(selector, options) {
+        var select = $(selector);
+        options.forEach(function(opt) {
+          select.append($('<option>').val(opt).text(opt));
+        });
+      }
+
+      populateSelect('.col-filter-0', uniqueSorted(repos.map(function(r) { return r.org; })));
+      populateSelect('.col-filter-3', uniqueSorted(repos.map(function(r) { return r.language; })));
+      populateSelect('.col-filter-4', uniqueSorted(repos.map(function(r) { return r.license; })));
+
+      // Minimum-value filters for the numeric stat columns (Stars, Forks, Watchers).
+      var numericMin = { 5: null, 6: null, 7: null };
+
+      $.fn.dataTable.ext.search.push(function(settings, searchData) {
+        if (settings.nTable.id !== 'repo-table') return true;
+        for (var col in numericMin) {
+          var min = numericMin[col];
+          if (min !== null && !isNaN(min)) {
+            var val = parseFloat(searchData[col]) || 0;
+            if (val < min) return false;
+          }
+        }
+        return true;
+      });
+
       $(document).ready(function() {
-        $('#repo-table').DataTable({
+        var table = $('#repo-table').DataTable({
           data: tableData,
           columns: [
             { title: 'Organization' },
@@ -207,12 +276,37 @@
             { title: 'Last Push' }
           ],
           order: [[5, 'desc']],
+          orderCellsTop: true,
           pageLength: 25,
           lengthMenu: [10, 25, 50, 100, 200],
           responsive: true,
           language: {
             search: 'Search repos:'
           }
+        });
+
+        $('tr.column-filters th').on('click', function(e) {
+          e.stopPropagation();
+        });
+
+        [1, 2, 8].forEach(function(col) {
+          $('.col-filter-' + col).on('keyup change', function() {
+            table.column(col).search(this.value, false, false).draw();
+          });
+        });
+
+        [0, 3, 4].forEach(function(col) {
+          $('.col-filter-' + col).on('change', function() {
+            table.column(col).search(this.value, false, false).draw();
+          });
+        });
+
+        [5, 6, 7].forEach(function(col) {
+          $('.col-filter-' + col).on('keyup change', function() {
+            var val = this.value.trim();
+            numericMin[col] = val === '' ? null : parseFloat(val);
+            table.draw();
+          });
         });
       });
     </script>
