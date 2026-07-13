@@ -1,0 +1,53 @@
+---
+---
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+// Brand palette pulled from sbpdiscovery.org (Sanford Burnham Prebys)
+$header-heading-color: #FAFAFA;
+$header-bg-color: #1B1F22;
+$header-bg-color-secondary: #801420;
+
+$section-headings-color: #801420;
+$body-text-color: #1B1F22;
+$body-link-color: #801420;
+$blockquote-text-color: #2C363F;
+
+$code-bg-color: #F2F5EA;
+$code-text-color: #2C363F;
+
+$border-color: #DBE3CA;
+$table-border-color: #DCE2C7;
+$hr-border-color: #E8EBDA;
+
+@import "{{ site.theme }}";
+
+/* --- Sanford Burnham Prebys brand overrides --- */
+
+body {
+  font-family: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #FAFAFA;
+}
+
+.btn {
+  border-radius: 5rem;
+  font-weight: 600;
+}
+
+.main-content a {
+  font-weight: 500;
+}
+
+.main-content table th {
+  background-color: #F2F5EA;
+  color: $section-headings-color;
+}
+
+.main-content table tr:nth-child(even) td {
+  background-color: #FBF3E5;
+}
+
+.site-footer-credits a {
+  color: inherit;
+  text-decoration: underline;
+}
