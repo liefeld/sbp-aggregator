@@ -1,6 +1,5 @@
 ---
 layout: default
-title: Welcome
 ---
 
 # Welcome to the Sanford Burnham Prebys Software Core
