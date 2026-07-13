@@ -1,7 +1,6 @@
-title: SBP Aggregator
+title: SBP Software Core
 description: >-
-  An aggregated view of public repositories across GenePattern, IGV Team,
-  UCLA Health Data Science, and GSEA/MSigDB.
+  An aggregated view Sanford Burnham Prebys Discovery Institutes computational contributions to science.
 
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
