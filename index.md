@@ -3,22 +3,22 @@ layout: default
 title: Welcome
 ---
 
-# Welcome to SBP Aggregator
+# Welcome to the Sanford Burnham Prebys Software Core
 
-SBP Aggregator provides a unified view of public software repositories maintained by a group of related bioinformatics and genomics organizations. Use this site to discover tools, pipelines, and resources developed by the community.
+The Sanford Burnham Prebys (SBP) Software Core provides a unified view of public software repositories maintained by SBP faculty computational laboratories. Discover the breadth of tools, pipelines, and resources developed by the SBP laboratories and the SBP Software Core (SBP-SC)).
 
 ## Organizations
 
-This site tracks public repositories from six GitHub organizations:
+This site tracks public repositories from several GitHub organizations taht organize the projects of the SBP faculty and SBP-SC:
 
 | Organization | Focus |
 |---|---|
-| [GenePattern](https://github.com/genepattern) | Genomic analysis platform and modules for end-to-end bioinformatics workflows |
-| [IGV Team](https://github.com/igvteam) | Integrative Genomics Viewer and related visualization tools |
-| [UCLA Health Data Science (uclahs-cds)](https://github.com/uclahs-cds) | Cancer data science pipelines and infrastructure |
-| [GSEA / MSigDB](https://github.com/GSEA-MSigDB) | Gene Set Enrichment Analysis tools and the Molecular Signatures Database |
-| [Yip Lab](https://github.com/Yip-Lab) | Sanford Burnham Prebys cancer center lab tools and analysis code |
-| [Chun Lab](https://github.com/chunlab) | Sanford Burnham Prebys neuroscience/aging lab bioinformatics team |
+| [GenePattern](https://github.com/genepattern) | Mesirov Lab: Genomic analysis platform and modules for end-to-end bioinformatics workflows |
+| [IGV Team](https://github.com/igvteam) | Mesirov Lab: Integrative Genomics Viewer and related visualization tools |
+| [UCLA Health Data Science (uclahs-cds)](https://github.com/uclahs-cds) | Boutros Lab: Cancer data science pipelines and infrastructure |
+| [GSEA / MSigDB](https://github.com/GSEA-MSigDB) | Mesirov Lab: Gene Set Enrichment Analysis tools and the Molecular Signatures Database |
+| [Yip Lab](https://github.com/Yip-Lab) | Yip Lab: Sanford Burnham Prebys Center for Data Science and Artifical Intelligence |
+| [Chun Lab](https://github.com/chunlab) | Chun Lab: Sanford Burnham Prebys neuroscience/aging lab bioinformatics team |
 
 ## How It Works
 
