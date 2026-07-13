@@ -9,7 +9,7 @@ SBP Aggregator provides a unified view of public software repositories maintaine
 
 ## Organizations
 
-This site tracks public repositories from four GitHub organizations:
+This site tracks public repositories from six GitHub organizations:
 
 | Organization | Focus |
 |---|---|
@@ -17,6 +17,8 @@ This site tracks public repositories from four GitHub organizations:
 | [IGV Team](https://github.com/igvteam) | Integrative Genomics Viewer and related visualization tools |
 | [UCLA Health Data Science (uclahs-cds)](https://github.com/uclahs-cds) | Cancer data science pipelines and infrastructure |
 | [GSEA / MSigDB](https://github.com/GSEA-MSigDB) | Gene Set Enrichment Analysis tools and the Molecular Signatures Database |
+| [Yip Lab](https://github.com/Yip-Lab) | Sanford Burnham Prebys cancer center lab tools and analysis code |
+| [Chun Lab](https://github.com/chunlab) | Sanford Burnham Prebys neuroscience/aging lab bioinformatics team |
 
 ## How It Works
 

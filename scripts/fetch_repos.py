@@ -9,7 +9,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-ORGS = ["genepattern", "igvteam", "uclahs-cds", "GSEA-MSigDB"]
+ORGS = ["genepattern", "igvteam", "uclahs-cds", "GSEA-MSigDB", "Yip-Lab", "chunlab"]
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "_data", "repositories.json")
 API_BASE = "https://api.github.com"
 
