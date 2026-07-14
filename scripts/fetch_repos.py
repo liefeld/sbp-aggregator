@@ -9,7 +9,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-ORGS = ["genepattern", "igvteam", "uclahs-cds", "GSEA-MSigDB", "Yip-Lab", "chunlab"]
+ORGS = ["genepattern", "igvteam", "uclahs-cds", "GSEA-MSigDB", "Yip-Lab", "chunlab", "Sinha-CompBio-Lab"]
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "_data", "repositories.json")
 API_BASE = "https://api.github.com"
 
@@ -53,17 +53,28 @@ def fetch_json(url, headers):
 def get_org_repos(org, headers):
     repos = []
     page = 1
-    while True:
-        url = f"{API_BASE}/orgs/{org}/repos?type=public&per_page=100&page={page}"
-        print(f"  Fetching {org} page {page}...", file=sys.stderr)
-        data, link_header = fetch_json(url, headers)
-        if not data:
-            break
-        repos.extend(data)
-        if 'rel="next"' not in link_header:
-            break
-        page += 1
-        time.sleep(0.25)
+    # Try org endpoint first; fall back to user endpoint for personal accounts.
+    for endpoint in [f"{API_BASE}/orgs/{org}/repos", f"{API_BASE}/users/{org}/repos"]:
+        repos = []
+        page = 1
+        try:
+            while True:
+                url = f"{endpoint}?type=public&per_page=100&page={page}"
+                print(f"  Fetching {org} page {page} ({endpoint.split('/')[3]})...", file=sys.stderr)
+                data, link_header = fetch_json(url, headers)
+                if not data:
+                    break
+                repos.extend(data)
+                if 'rel="next"' not in link_header:
+                    break
+                page += 1
+                time.sleep(0.25)
+            return repos  # success — no need to try fallback
+        except urllib.error.HTTPError as e:
+            if e.code == 404 and endpoint.split('/')[3] == 'orgs':
+                print(f"  {org} not found as org, trying as user...", file=sys.stderr)
+                continue
+            raise
     return repos
 
 

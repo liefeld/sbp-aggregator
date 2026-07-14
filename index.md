@@ -18,6 +18,7 @@ This site tracks public repositories from several GitHub organizations that orga
 | [GSEA / MSigDB](https://github.com/GSEA-MSigDB) | Mesirov Lab: Gene Set Enrichment Analysis tools and the Molecular Signatures Database |
 | [Yip Lab](https://github.com/Yip-Lab) | Yip Lab: Sanford Burnham Prebys Center for Data Science and Artifical Intelligence |
 | [Chun Lab](https://github.com/chunlab) | Chun Lab: Sanford Burnham Prebys neuroscience/aging lab bioinformatics team |
+| [Sinha CompBio Lab](https://github.com/Sinha-CompBio-Lab) | Sinha Lab: Computational biology research at Sanford Burnham Prebys |
 
 ## How It Works
 
